@@ -1,0 +1,142 @@
+import random
+
+def Wstep():
+    print ("Wpisz swoje imię")
+    imie = input()
+    print (f"Cześć, {imie} miło Cię widzieć w grze")
+    print (" ")
+    print ("Odpowiedz poprawnie na 15 pytań aby wygrać milion złotych! Powodzenia :)")
+    print (" ")
+
+def baza_pytan():
+    PulaPytan = [
+    {
+        'Pytania': "Która planeta jest znana jako 'Czerwona Planeta'?",
+        'pula': ["Mars", "Wenus", "Jowisz", "Uran"],
+        'poprawna_odp': "Mars"
+    },
+    {
+        'Pytania': "Który naukowiec sformułował teorię ogólnej teorii względności?",
+        'pula': ["Albert Einstein", "Isaac Newton", "Galileo Galilei", "Stephen Hawking"],
+        'poprawna_odp': "Albert Einstein"
+    },
+    {
+        'Pytania': "W którym kraju znajduje się piramida Cheopsa?",
+        'pula': ["Egipt", "Meksyk", "Grecja", "Chiny"],
+        'poprawna_odp': "Egipt"
+    },
+    {
+        'Pytania': "Które z miast jest stolicą Australii?",
+        'pula': ["Canberra", "Sydney", "Melbourne", "Brisbane"],
+        'poprawna_odp': "Canberra"
+    },
+    {
+        'Pytania': "Jak nazywa się największe jezioro w Afryce?",
+        'pula': ["Jezioro Wiktorii", "Jezioro Tanganika", "Jezioro Malawi", "Jezioro Czad"],
+        'poprawna_odp': "Jezioro Wiktorii"
+    },
+    {
+        'Pytania': "Która rzeka jest najdłuższą na świecie?",
+        'pula': ["Nil", "Amazonka", "Jangcy", "Missisipi"],
+        'poprawna_odp': "Nil"
+    },
+    {
+        'Pytania': "Ile jest kontynentów w Afryce?",
+        'pula': ["50", "54", "60", "65"],
+        'poprawna_odp': "54"
+    },
+    {
+        'Pytania': "Kto napisał 'Romeo i Julia'?",
+        'pula': ["William Shakespeare", "Jane Austen", "Leo Tolstoy", "Charles Dickens"],
+        'poprawna_odp': "William Shakespeare"
+    },
+    {
+        'Pytania': "W którym roku miała miejsce rewolucja francuska?",
+        'pula': ["1776", "1789", "1804", "1830"],
+        'poprawna_odp': "1789"
+    },
+    {
+        'Pytania': "Który pierwiastek chemiczny oznacza się symbolem 'O'?",
+        'pula': ["Tlen", "Wodór", "Siarka", "Sód"],
+        'poprawna_odp': "Tlen"
+    },
+    {
+        'Pytania': "W którym kraju znajduje się Wielki Mur Chiński?",
+        'pula': ["Chiny", "Japonia", "Indie", "Mongolia"],
+        'poprawna_odp': "Chiny"
+    },
+    {
+        'Pytania': "Jak nazywany jest największy gatunek wieloryba?",
+        'pula': ["Błękitny", "Kosatka", "Siwy", "Płetwal biały"],
+        'poprawna_odp': "Błękitny"
+    },
+    {
+        'Pytania': "Które z państw nie jest członkiem Unii Europejskiej?",
+        'pula': ["Francja", "Norwegia", "Hiszpania", "Włochy"],
+        'poprawna_odp': "Norwegia"
+    },
+    {
+        'Pytania': "Które z miast leży nad rzeką Thames?",
+        'pula': ["Paryż", "Berlin", "Londyn", "Rzym"],
+        'poprawna_odp': "Londyn"
+    },
+    {
+        'Pytania': "Która z tych górskich rzek jest najdłuższa?",
+        'pula': ["Niger", "Nil", "Amur", "Jangcy"],
+        'poprawna_odp': "Nil"
+    },
+]
+    random.shuffle(PulaPytan)
+    return PulaPytan
+
+def Losuj_pytanie(Pytania):
+    random.shuffle(Pytania['pula'])
+    print(Pytania['Pytania'])
+    for Pętla, pula in enumerate(Pytania['pula'], start=1):
+        print(f"{Pętla}. {pula}")
+            
+    try:
+        user_answer = int(input("Wybierz odpowiedź 1-4: "))
+        if 1 <= user_answer <= 4:
+            if Pytania['pula'][user_answer - 1] == Pytania['poprawna_odp']:
+                return True
+            else:
+                print(" ")
+                print("Niestety odpowiedź jest nieprawidłowa, przegrywasz...")
+                return False
+        else:
+            print(" ")
+            print("Wpisz liczbę od 1 do 4.")
+            return False
+    except ValueError:
+        print("Wpisz jeszcze raz liczbę od 1 do 4.")
+        return False
+    
+def main():
+    Wstep()
+    Punkty = 1
+    licznik_pytan = 0
+    PulaPytan = baza_pytan()
+
+    for Pytania in PulaPytan:
+        if Losuj_pytanie(Pytania):
+            Punkty = 500 * (2 ** licznik_pytan)
+            print(" ")
+            print(f"Odpowiedź jest poprawna, masz aktualnie {Punkty} zł gratulacje!")
+
+            if Punkty >= 1000000:
+                Punkty = 1000000
+                break
+
+        else:
+            break
+        licznik_pytan += 1
+
+        if licznik_pytan == 15:
+            Punkty = 1000000
+            break
+
+    print(f"Zdobyte punkty: {Punkty} zł")
+
+if __name__ == "__main__":
+    main()
